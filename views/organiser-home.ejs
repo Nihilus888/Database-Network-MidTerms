@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organiser Home Page</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Organiser Home Page</h1>
+        <a href="/site-settings">Site Settings</a>
+    </header>
+
+    <section id="event-manager-info">
+        <h2><%= eventManager.name %></h2>
+        <p><%= eventManager.description %></p>
+    </section>
+
+    <section id="create-event">
+        <form action="/events/create" method="POST">
+            <button type="submit">Create New Event</button>
+        </form>
+    </section>
+
+    <section id="published-events">
+        <h2>Published Events</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Created At</th>
+                    <th>Published At</th>
+                    <th>Tickets</th>
+                    <th>Share</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% publishedEvents.forEach(event => { %>
+                <tr>
+                    <td><%= event.title %></td>
+                    <td><%= event.date %></td>
+                    <td><%= event.createdAt %></td>
+                    <td><%= event.publishedAt %></td>
+                    <td>
+                        <% for (let type in event.tickets) { %>
+                            <p><%= type %>: <%= event.tickets[type] %></p>
+                        <% } %>
+                    </td>
+                    <td>
+                        <a href="/attendee/events/<%= event.id %>">Share Link</a>
+                    </td>
+                    <td>
+                        <form action="/events/<%= event.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="draft-events">
+        <h2>Draft Events</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Created At</th>
+                    <th>Tickets</th>
+                    <th>Edit</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% draftEvents.forEach(event => { %>
+                <tr>
+                    <td><%= event.title %></td>
+                    <td><%= event.date %></td>
+                    <td><%= event.createdAt %></td>
+                    <td>
+                        <% for (let type in event.tickets) { %>
+                            <p><%= type %>: <%= event.tickets[type] %></p>
+                        <% } %>
+                    </td>
+                    <td>
+                        <a href="/events/<%= event.id %>/edit">Edit</a>
+                    </td>
+                    <td>
+                        <form action="/events/<%= event.id %>/publish" method="POST" style="display:inline;">
+                            <button type="submit">Publish</button>
+                        </form>
+                        <form action="/events/<%= event.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>
