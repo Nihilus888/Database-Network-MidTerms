@@ -233,6 +233,84 @@ app.post('/site-settings', (req, res, next) => {
     });
 });
 
+// Edit event page
+app.get('/events/:id/edit', (req, res) => {
+    const eventId = req.params.id;
+
+    global.db.get(
+        "SELECT * FROM events WHERE id = ?",
+        [eventId],
+        (err, event) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send("Database error");
+            }
+            if (!event) {
+                return res.status(404).send("Event not found");
+            }
+
+            // Parse tickets JSON
+            event.tickets = event.tickets ? JSON.parse(event.tickets) : {
+                full: { quantity: 0, price: 0 },
+                concession: { quantity: 0, price: 0 }
+            };
+
+            res.render('edit-event', { event });
+        }
+    );
+});
+
+// Update event
+app.post('/events/:id/update', (req, res) => {
+    const eventId = req.params.id;
+
+    const {
+        title,
+        description,
+        fullQuantity,
+        fullPrice,
+        concessionQuantity,
+        concessionPrice
+    } = req.body;
+
+    // Basic validation
+    if (!title || !description) {
+        return res.status(400).send("All fields required");
+    }
+
+    const tickets = JSON.stringify({
+        full: {
+            quantity: Number(fullQuantity),
+            price: Number(fullPrice)
+        },
+        concession: {
+            quantity: Number(concessionQuantity),
+            price: Number(concessionPrice)
+        }
+    });
+
+    const lastModifiedAt = new Date().toISOString();
+
+    global.db.run(
+        `
+        UPDATE events
+        SET title = ?,
+            description = ?,
+            tickets = ?,
+            lastModifiedAt = ?
+        WHERE id = ?
+        `,
+        [title, description, tickets, lastModifiedAt, eventId],
+        function (err) {
+            if (err) {
+                console.error(err);
+                return res.status(500).send("Update failed");
+            }
+            res.redirect('/organiser');
+        }
+    );
+});
+
 // Make the web application listen for HTTP requests
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
