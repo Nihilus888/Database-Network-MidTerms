@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organiser Edit Event Page</title>
+</head>
+<body>
+
+<h1>Organiser Edit Event Page</h1>
+
+<p><strong>Event created on:</strong> <%= event.createdAt %></p>
+<p><strong>Last modified:</strong> <%= event.lastModifiedAt || 'Not modified yet' %></p>
+
+<form action="/events/<%= event.id %>/update" method="POST">
+
+    <label>
+        Event Title:
+        <input type="text" name="title" value="<%= event.title %>" required>
+    </label>
+    <br><br>
+
+    <label>
+        Event Description:
+        <textarea name="description" required><%= event.description || '' %></textarea>
+    </label>
+    <br><br>
+
+    <h3>Full Price Tickets</h3>
+    <label>
+        Quantity:
+        <input type="number" name="fullQuantity" min="0"
+               value="<%= event.tickets.full.quantity %>" required>
+    </label>
+    <label>
+        Price:
+        <input type="number" name="fullPrice" min="0" step="0.01"
+               value="<%= event.tickets.full.price %>" required>
+    </label>
+
+    <h3>Concession Tickets</h3>
+    <label>
+        Quantity:
+        <input type="number" name="concessionQuantity" min="0"
+               value="<%= event.tickets.concession.quantity %>" required>
+    </label>
+    <label>
+        Price:
+        <input type="number" name="concessionPrice" min="0" step="0.01"
+               value="<%= event.tickets.concession.price %>" required>
+    </label>
+
+    <br><br>
+    <button type="submit">Submit Changes</button>
+</form>
+
+<br>
+<a href="/organiser">Back to Organiser Home Page</a>
+
+</body>
+</html>
