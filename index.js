@@ -311,6 +311,36 @@ app.post('/events/:id/update', (req, res) => {
     );
 });
 
+// Attendee Home Page
+app.get('/attendee', (req, res, next) => {
+
+    // Get site name & description
+    const settingsQuery = "SELECT * FROM site_settings LIMIT 1";
+
+    global.db.get(settingsQuery, (err, site) => {
+        if (err) return next(err);
+
+        // Get published events ordered by date (soonest first)
+        const eventsQuery = `
+            SELECT id, title, date
+            FROM events
+            WHERE status = 'published'
+            ORDER BY date ASC
+        `;
+
+        global.db.all(eventsQuery, (err, events) => {
+            if (err) return next(err);
+
+            res.render('attendee-home.ejs', {
+                site,
+                events
+            });
+        });
+    });
+});
+
+// Make the 
+
 // Make the web application listen for HTTP requests
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
