@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendee Home Page</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Attendee Home Page</h1>
+    </header>
+
+    <section id="site-info">
+        <h2><%= site.name %></h2>
+        <p><%= site.description %></p>
+    </section>
+
+    <section id="event-list">
+        <h2>Upcoming Events</h2>
+
+        <% if (events.length === 0) { %>
+            <p>No upcoming events.</p>
+        <% } else { %>
+            <ul>
+                <% events.forEach(event => { %>
+                    <li>
+                        <a href="/attendee/events/<%= event.id %>">
+                            <strong><%= event.title %></strong> —
+                            <%= event.date %>
+                        </a>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+    </section>
+
+</body>
+</html>
