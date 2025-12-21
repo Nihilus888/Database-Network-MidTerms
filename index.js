@@ -312,34 +312,41 @@ app.post('/events/:id/update', (req, res) => {
 });
 
 // Attendee Home Page
-app.get('/attendee', (req, res, next) => {
+app.get('/attendee', (req, res) => {
+    let query = "SELECT * FROM events WHERE status = 'published'";
+    let params = [];
 
-    // Get site name & description
-    const settingsQuery = "SELECT * FROM site_settings LIMIT 1";
+    if (req.query.search) {
+        query += " AND title LIKE ?";
+        params.push(`%${req.query.search}%`);
+    }
 
-    global.db.get(settingsQuery, (err, site) => {
-        if (err) return next(err);
+    if (req.query.date) {
+        query += " AND date >= ?";
+        params.push(req.query.date);
+    }
 
-        // Get published events ordered by date (soonest first)
-        const eventsQuery = `
-            SELECT id, title, date
-            FROM events
-            WHERE status = 'published'
-            ORDER BY date ASC
-        `;
+    query += " ORDER BY date ASC"; // next event first
 
-        global.db.all(eventsQuery, (err, events) => {
-            if (err) return next(err);
+    global.db.all(query, params, (err, events) => {
+        if (err) return res.status(500).send(err.message);
 
-            res.render('attendee-home.ejs', {
-                site,
-                events
+        // Parse tickets JSON for each event
+        events.forEach(e => e.tickets = JSON.parse(e.tickets || '{}'));
+
+        // Get site settings
+        global.db.get("SELECT * FROM site_settings LIMIT 1", (err, site) => {
+            if (err) return res.status(500).send(err.message);
+
+            res.render('attendee-home', {
+                site: site,                      // <-- pass the full site object
+                events: events,
+                querySearch: req.query.search || '',
+                queryDate: req.query.date || ''
             });
         });
     });
 });
-
-// Make the 
 
 // Make the web application listen for HTTP requests
 app.listen(port, () => {

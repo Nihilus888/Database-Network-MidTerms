@@ -16,6 +16,15 @@
         <p><%= site.description %></p>
     </section>
 
+    <!-- Search Form -->
+    <section id="search-events">
+        <form action="/attendee" method="GET">
+            <input type="text" name="search" placeholder="Search by event name" value="<%= typeof querySearch !== 'undefined' ? querySearch : '' %>">
+            <input type="date" name="date" value="<%= typeof queryDate !== 'undefined' ? queryDate : '' %>">
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
     <section id="event-list">
         <h2>Upcoming Events</h2>
 
