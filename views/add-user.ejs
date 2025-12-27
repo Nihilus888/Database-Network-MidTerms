@@ -3,14 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
     <title>Add User</title>
 </head>
-<body>
-    <h1>Add User</h1>
-    <form action="add-user" method="post">
-        <p>User: <input id="user" type="text" name="user_name" /></p>
-        <button type="submit">Create a new user record</button>
-    </form>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+
+    <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; box-sizing: border-box;">
+        
+        <h1 style="margin-top: 0; color: #1c1e21; font-size: 1.8rem; text-align: center; margin-bottom: 25px;">
+            Add New User
+        </h1>
+
+        <form action="add-user" method="post">
+            <div style="margin-bottom: 20px;">
+                <label for="user" style="display: block; font-weight: 600; margin-bottom: 8px; color: #4b4f56;">
+                    Username
+                </label>
+                <input id="user" type="text" name="user_name" placeholder="Enter username" 
+                       style="width: 100%; padding: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 1rem; box-sizing: border-box; outline: none; transition: border-color 0.2s;">
+            </div>
+
+            <button type="submit" style="width: 100%; background-color: #28a745; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; box-shadow: 0 4px 6px rgba(40, 167, 69, 0.2);">
+                Create a new user record
+            </button>
+        </form>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="/" style="color: #606770; text-decoration: none; font-size: 0.9rem;">
+                &larr; Return to Dashboard
+            </a>
+        </div>
+    </div>
+
 </body>
 </html>

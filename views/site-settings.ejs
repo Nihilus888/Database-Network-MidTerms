@@ -4,20 +4,41 @@
     <meta charset="UTF-8">
     <title>Site Settings</title>
 </head>
-<body>
-    <h1>Site Settings Page</h1>
+<body style="font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
 
-    <form action="/site-settings" method="POST" onsubmit="return validateForm()">
-        <label for="name">Site Name:</label>
-        <input type="text" id="name" name="name" value="<%= settings.name %>"><br>
+    <div style="background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; max-width: 500px; box-sizing: border-box;">
+        
+        <h1 style="margin-top: 0; color: #1c1e21; font-size: 1.75rem; border-bottom: 2px solid #f0f2f5; padding-bottom: 15px; margin-bottom: 25px; text-align: center;">
+            Site Settings
+        </h1>
 
-        <label for="description">Site Description:</label>
-        <textarea id="description" name="description"><%= settings.description %></textarea><br>
+        <form action="/site-settings" method="POST" onsubmit="return validateForm()">
+            
+            <div style="margin-bottom: 20px;">
+                <label for="name" style="display: block; font-weight: 600; margin-bottom: 8px; color: #4b4f56;">Site Name:</label>
+                <input type="text" id="name" name="name" value="<%= settings.name %>" 
+                       style="width: 100%; padding: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 1rem; box-sizing: border-box; transition: border-color 0.2s;">
+            </div>
 
-        <button type="submit">Save</button>
-    </form>
+            <div style="margin-bottom: 25px;">
+                <label for="description" style="display: block; font-weight: 600; margin-bottom: 8px; color: #4b4f56;">Site Description:</label>
+                <textarea id="description" name="description" 
+                          style="width: 100%; height: 100px; padding: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 1rem; font-family: inherit; box-sizing: border-box; resize: none;"><%= settings.description %></textarea>
+            </div>
 
-    <a href="/organiser-home">Back to Organiser Home</a>
+            <button type="submit" style="width: 100%; background-color: #1877f2; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s;">
+                Save Configuration
+            </button>
+        </form>
+
+        <hr style="border: 0; border-top: 1px solid #f0f2f5; margin: 25px 0;">
+
+        <div style="text-align: center;">
+            <a href="/organiser-home" style="text-decoration: none; color: #606770; font-size: 0.9rem; font-weight: 500;">
+                &larr; Back to Organiser Home
+            </a>
+        </div>
+    </div>
 
     <script>
         function validateForm() {

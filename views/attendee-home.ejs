@@ -3,46 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Attendee Home Page</title>
-    <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+<body style="font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8f9fa; color: #333; margin: 0; padding: 0;">
 
-    <header>
-        <h1>Attendee Home Page</h1>
+    <header style="background-color: #ffffff; padding: 20px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center;">
+        <h1 style="margin: 0; color: #1a73e8; font-size: 1.8rem;">Attendee Home Page</h1>
     </header>
 
-    <section id="site-info">
-        <h2><%= site.name %></h2>
-        <p><%= site.description %></p>
-    </section>
+    <main style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
+        
+        <section id="site-info" style="text-align: center; margin-bottom: 40px;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #202124;"><%= site.name %></h2>
+            <p style="font-size: 1.1rem; color: #5f6368; line-height: 1.6;"><%= site.description %></p>
+        </section>
 
-    <!-- Search Form -->
-    <section id="search-events">
-        <form action="/attendee" method="GET">
-            <input type="text" name="search" placeholder="Search by event name" value="<%= typeof querySearch !== 'undefined' ? querySearch : '' %>">
-            <input type="date" name="date" value="<%= typeof queryDate !== 'undefined' ? queryDate : '' %>">
-            <button type="submit">Search</button>
-        </form>
-    </section>
+        <section id="search-events" style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 50px;">
+            <form action="/attendee" method="GET" style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                <div style="flex: 2; min-width: 200px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">What are you looking for?</label>
+                    <input type="text" name="search" placeholder="Search by event name..." 
+                           value="<%= typeof querySearch !== 'undefined' ? querySearch : '' %>"
+                           style="width: 100%; padding: 12px; border: 1px solid #dadce0; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                </div>
+                
+                <div style="flex: 1; min-width: 150px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">Date:</label>
+                    <input type="date" name="date" value="<%= typeof queryDate !== 'undefined' ? queryDate : '' %>"
+                           style="width: 100%; padding: 12px; border: 1px solid #dadce0; border-radius: 8px; font-size: 1rem; box-sizing: border-box; font-family: inherit;">
+                </div>
 
-    <section id="event-list">
-        <h2>Upcoming Events</h2>
+                <button type="submit" style="background-color: #1a73e8; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s;">
+                    Search Events
+                </button>
+            </form>
+        </section>
 
-        <% if (events.length === 0) { %>
-            <p>No upcoming events.</p>
-        <% } else { %>
-            <ul>
-                <% events.forEach(event => { %>
-                    <li>
-                        <a href="/attendee/events/<%= event.id %>">
-                            <strong><%= event.title %></strong> —
-                            <%= event.date %>
-                        </a>
-                    </li>
-                <% }); %>
-            </ul>
-        <% } %>
-    </section>
+        <section id="event-list">
+            <h2 style="font-size: 1.5rem; margin-bottom: 20px; border-bottom: 2px solid #e8eaed; padding-bottom: 10px;">Upcoming Events</h2>
+
+            <% if (events.length === 0) { %>
+                <div style="text-align: center; padding: 50px; background: #fff; border-radius: 12px; border: 2px dashed #dadce0;">
+                    <p style="color: #70757a; font-size: 1.1rem;">No upcoming events found matching your criteria.</p>
+                </div>
+            <% } else { %>
+                <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 20px;">
+                    <% events.forEach(event => { %>
+                        <li style="background: white; border-radius: 12px; border: 1px solid #e8eaed; transition: transform 0.2s, box-shadow 0.2s; overflow: hidden;">
+                            <a href="/attendee/events/<%= event.id %>" style="text-decoration: none; color: inherit; display: block; padding: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong style="display: block; font-size: 1.25rem; color: #1a73e8; margin-bottom: 5px;"><%= event.title %></strong>
+                                        <span style="color: #5f6368; font-size: 0.95rem;">📅 <%= event.date %></span>
+                                    </div>
+                                    <span style="background-color: #f1f3f4; color: #1a73e8; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">
+                                        View Details &rarr;
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </section>
+
+    </main>
+
+    <footer style="text-align: center; padding: 40px; color: #70757a; font-size: 0.9rem;">
+        &copy; 2025 Event Management App
+    </footer>
 
 </body>
 </html>

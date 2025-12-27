@@ -4,22 +4,46 @@
     <meta charset="UTF-8">
     <title>Edit Event - <%= event.title %></title>
 </head>
-<body>
-    <h1>Edit Event: <%= event.title %></h1>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f9; color: #333; margin: 0; padding: 40px; display: flex; flex-direction: column; align-items: center; min-height: 100vh;">
 
-    <form action="/events/<%= event.id %>/update" method="POST">
-        <label>Title:</label>
-        <input type="text" name="title" value="<%= event.title %>"><br>
+    <div style="background: white; width: 100%; max-width: 600px; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); box-sizing: border-box;">
+        
+        <h1 style="margin-top: 0; color: #2c3e50; font-size: 1.8rem; border-left: 5px solid #007bff; padding-left: 15px; margin-bottom: 30px;">
+            Edit Event: <%= event.title %>
+        </h1>
 
-        <label>Date:</label>
-        <input type="date" name="date" value="<%= event.date %>"><br>
+        <form action="/events/<%= event.id %>/update" method="POST">
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #555;">Title:</label>
+                <input type="text" name="title" value="<%= event.title %>" 
+                       style="width: 100%; padding: 12px; border: 1px solid #ccd0d5; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+            </div>
 
-        <label>Tickets (JSON format):</label>
-        <textarea name="tickets"><%= event.tickets %></textarea><br>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #555;">Date:</label>
+                <input type="date" name="date" value="<%= event.date %>" 
+                       style="width: 100%; padding: 12px; border: 1px solid #ccd0d5; border-radius: 8px; font-size: 1rem; box-sizing: border-box; font-family: inherit;">
+            </div>
 
-        <button type="submit">Save</button>
-    </form>
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #555;">Tickets (JSON format):</label>
+                <textarea name="tickets" 
+                          style="width: 100%; height: 160px; padding: 15px; border: 1px solid #ccd0d5; border-radius: 8px; font-size: 0.9rem; font-family: 'Courier New', Courier, monospace; background-color: #f8f9fa; color: #d63384; box-sizing: border-box; resize: vertical;"><%= event.tickets %></textarea>
+                <small style="display: block; margin-top: 5px; color: #6c757d; font-style: italic;">Note: Ensure valid JSON syntax to avoid errors.</small>
+            </div>
 
-    <a href="/organiser-home">Back to Organiser Home</a>
+            <button type="submit" style="width: 100%; background-color: #007bff; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s ease;">
+                Save Changes
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 25px;">
+            <a href="/organiser-home" style="text-decoration: none; color: #6c757d; font-size: 0.95rem;">
+                &larr; Back to Organiser Home
+            </a>
+        </div>
+    </div>
+
 </body>
 </html>

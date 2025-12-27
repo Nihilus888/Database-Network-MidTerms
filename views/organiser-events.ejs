@@ -4,57 +4,67 @@
     <meta charset="UTF-8">
     <title>Organiser Edit Event Page</title>
 </head>
-<body>
+<body style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 40px; display: flex; flex-direction: column; align-items: center;">
 
-<h1>Organiser Edit Event Page</h1>
+    <div style="background: white; width: 100%; max-width: 650px; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+        
+        <h1 style="margin-top: 0; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 15px;">Edit Event Details</h1>
 
-<p><strong>Event created on:</strong> <%= event.createdAt %></p>
-<p><strong>Last modified:</strong> <%= event.lastModifiedAt || 'Not modified yet' %></p>
+        <div style="display: flex; gap: 20px; margin-bottom: 25px; font-size: 0.85rem; color: #666;">
+            <p style="margin: 0;"><strong>Created:</strong> <%= event.createdAt %></p>
+            <p style="margin: 0;"><strong>Modified:</strong> <%= event.lastModifiedAt || 'Never' %></p>
+        </div>
 
-<form action="/events/<%= event.id %>/update" method="POST">
+        <form action="/events/<%= event.id %>/update" method="POST">
 
-    <label>
-        Event Title:
-        <input type="text" name="title" value="<%= event.title %>" required>
-    </label>
-    <br><br>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 8px;">Event Title:</label>
+                <input type="text" name="title" value="<%= event.title %>" required 
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 1rem;">
+            </div>
 
-    <label>
-        Event Description:
-        <textarea name="description" required><%= event.description || '' %></textarea>
-    </label>
-    <br><br>
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 8px;">Event Description:</label>
+                <textarea name="description" required 
+                          style="width: 100%; height: 120px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; resize: vertical;"><%= event.description || '' %></textarea>
+            </div>
 
-    <h3>Full Price Tickets</h3>
-    <label>
-        Quantity:
-        <input type="number" name="fullQuantity" min="0"
-               value="<%= event.tickets.full.quantity %>" required>
-    </label>
-    <label>
-        Price:
-        <input type="number" name="fullPrice" min="0" step="0.01"
-               value="<%= event.tickets.full.price %>" required>
-    </label>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
 
-    <h3>Concession Tickets</h3>
-    <label>
-        Quantity:
-        <input type="number" name="concessionQuantity" min="0"
-               value="<%= event.tickets.concession.quantity %>" required>
-    </label>
-    <label>
-        Price:
-        <input type="number" name="concessionPrice" min="0" step="0.01"
-               value="<%= event.tickets.concession.price %>" required>
-    </label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #007bff;">
+                    <h3 style="margin-top: 0; font-size: 1.1rem; color: #007bff;">Full Price</h3>
+                    <label style="display: block; font-size: 0.9rem; margin-bottom: 5px;">Quantity:</label>
+                    <input type="number" name="fullQuantity" min="0" value="<%= event.tickets.full.quantity %>" required
+                           style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    
+                    <label style="display: block; font-size: 0.9rem; margin-bottom: 5px;">Price ($):</label>
+                    <input type="number" name="fullPrice" min="0" step="0.01" value="<%= event.tickets.full.price %>" required
+                           style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
 
-    <br><br>
-    <button type="submit">Submit Changes</button>
-</form>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #6c757d;">
+                    <h3 style="margin-top: 0; font-size: 1.1rem; color: #495057;">Concession</h3>
+                    <label style="display: block; font-size: 0.9rem; margin-bottom: 5px;">Quantity:</label>
+                    <input type="number" name="concessionQuantity" min="0" value="<%= event.tickets.concession.quantity %>" required
+                           style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    
+                    <label style="display: block; font-size: 0.9rem; margin-bottom: 5px;">Price ($):</label>
+                    <input type="number" name="concessionPrice" min="0" step="0.01" value="<%= event.tickets.concession.price %>" required
+                           style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+            </div>
 
-<br>
-<a href="/organiser">Back to Organiser Home Page</a>
+            <button type="submit" style="width: 100%; margin-top: 30px; background-color: #007bff; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.2s;">
+                Save Changes
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/organiser" style="color: #666; text-decoration: none; font-size: 0.9rem;">← Cancel and go back</a>
+        </div>
+    </div>
 
 </body>
 </html>
